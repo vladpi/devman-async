@@ -42,12 +42,12 @@ async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0
         column += columns_speed
 
 
-async def blink(canvas, row, column, symbol='*'):
+async def blink(canvas, row, column, offset_tics, symbol='*'):
     """Display animation of star blink."""
 
     while True:
         canvas.addstr(row, column, symbol, curses.A_DIM)
-        for _ in range(randint(10, 20)):
+        for _ in range(offset_tics):
             await asyncio.sleep(0)
 
         canvas.addstr(row, column, symbol)

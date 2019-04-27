@@ -124,5 +124,6 @@ def get_random_blink_params(canvas):
     row = randint(MIN_ROW, max_row)
     column = randint(MIN_COL, max_column)
     symbol = choice('+*.:')
+    offset_tics = randint(10, 20)
 
-    return row, column, symbol
+    return row, column, offset_tics, symbol
