@@ -71,7 +71,7 @@ async def animate_spaceship(canvas, row, column):
 
     while True:
         for _ in range(randint(3, 5)):
-            row, column = get_rocket_position(canvas, row, column, CONTROLS, frame_1)
+            row, column = get_rocket_position(canvas, row, column, controls, frame_1)
             draw_frame(canvas, row, column, frame_1)
 
             await asyncio.sleep(0)
@@ -79,7 +79,7 @@ async def animate_spaceship(canvas, row, column):
             draw_frame(canvas, row, column, frame_1, negative=True)
 
         for _ in range(randint(3, 5)):
-            row, column = get_rocket_position(canvas, row, column, CONTROLS, frame_2)
+            row, column = get_rocket_position(canvas, row, column, controls, frame_2)
             draw_frame(canvas, row, column, frame_2)
 
             await asyncio.sleep(0)
@@ -88,7 +88,7 @@ async def animate_spaceship(canvas, row, column):
 
 
 def draw(canvas):
-    global CONTROLS
+    global controls
 
     curses.curs_set(False)
     canvas.border()
@@ -109,7 +109,7 @@ def draw(canvas):
     coroutines.append(fire(canvas, spaceship_row, canvas_column_center))
 
     while True:
-        CONTROLS = read_controls(canvas)
+        controls = read_controls(canvas)
 
         for coroutine in coroutines:
             try:
