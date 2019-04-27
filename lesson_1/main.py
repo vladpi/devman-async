@@ -116,8 +116,8 @@ def draw(canvas):
                 coroutine.send(None)
             except StopIteration:
                 coroutines.remove(coroutine)
-            canvas.refresh()
 
+        canvas.refresh()
         time.sleep(TIC_TIMEOUT)
 
 
