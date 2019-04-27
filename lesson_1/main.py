@@ -1,8 +1,11 @@
 import asyncio
 import curses
 import time
+from random import randint
 
-from curses_tools import *
+from curses_tools import MIN_ROW, MIN_COL
+from curses_tools import read_frame_from_file, get_rocket_position, draw_frame, get_frame_size, \
+    get_random_blink_params, read_controls
 
 TIC_TIMEOUT = 0.025
 MAX_STARS = 120
