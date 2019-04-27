@@ -25,12 +25,13 @@ async def fire(canvas, start_row, start_column, rows_speed=-0.3, columns_speed=0
 
     symbol = '-' if columns_speed else '|'
 
+    borders_size = 2
     rows, columns = canvas.getmaxyx()
-    max_row, max_column = rows - 1, columns - 1
+    max_row, max_column = rows - borders_size, columns - borders_size
 
     curses.beep()
 
-    while 0 < row < max_row and 0 < column < max_column:
+    while MIN_ROW < row < max_row and MIN_COL < column < max_column:
         canvas.addstr(round(row), round(column), symbol)
         await asyncio.sleep(0)
         canvas.addstr(round(row), round(column), ' ')
@@ -90,14 +91,19 @@ def draw(canvas):
     canvas.border()
     canvas.nodelay(True)
 
+    borders_size = 1
     rows, columns = canvas.getmaxyx()
-    max_row, max_column = rows - 1, columns - 1
+    max_row, max_column = rows - borders_size, columns - borders_size
 
+    spaceship_rows, spaceship_columns = get_frame_size(read_frame_from_file('frames/rocket_frame_1.txt'))
     canvas_column_center = max_column // 2
 
+    spaceship_row = max_row - spaceship_rows
+    spaceship_column = canvas_column_center - spaceship_columns // 2
+
     coroutines = [blink(canvas, *get_random_blink_params(canvas)) for _ in range(MAX_STARS)]
-    coroutines.append(fire(canvas, max_row - 10, canvas_column_center))
-    coroutines.append(animate_spaceship(canvas, max_row - 9, canvas_column_center - 2))
+    coroutines.append(animate_spaceship(canvas, spaceship_row, spaceship_column))
+    coroutines.append(fire(canvas, spaceship_row, canvas_column_center))
 
     while True:
         CONTROLS = read_controls(canvas)

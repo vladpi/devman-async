@@ -6,6 +6,8 @@ RIGHT_KEY_CODE = 261
 UP_KEY_CODE = 259
 DOWN_KEY_CODE = 258
 
+MIN_ROW, MIN_COL = 1, 1
+
 
 def read_controls(canvas):
     """Read keys pressed and returns tuple witl controls state."""
@@ -93,9 +95,9 @@ def get_rocket_position(canvas, current_row, current_column, controls, frame):
         Calculate position of rocket by frame size and current controls values. 
         Returns pairs (row value, column value)
     """
-
+    borders_size = 1
     rows, columns = canvas.getmaxyx()
-    max_row, max_column = rows - 1, columns - 1
+    max_row, max_column = rows - borders_size, columns - borders_size
 
     frame_rows, frame_columns = get_frame_size(frame)
 
@@ -103,8 +105,8 @@ def get_rocket_position(canvas, current_row, current_column, controls, frame):
 
     row, column = current_row + controls_row, current_column + controls_column
 
-    row = max(1, min(row, max_row - frame_rows))
-    column = max(1, min(column, max_column - frame_columns))
+    row = max(MIN_ROW, min(row, max_row - frame_rows))
+    column = max(MIN_COL, min(column, max_column - frame_columns))
 
     return row, column
 
@@ -115,11 +117,12 @@ def get_random_blink_params(canvas):
         Returns row value, column value, symbol.
     """
 
+    borders_size = 2
     rows, columns = canvas.getmaxyx()
-    max_row, max_column = rows - 2, columns - 2
+    max_row, max_column = rows - borders_size, columns - borders_size
 
-    row = randint(1, max_row)
-    column = randint(1, max_column)
+    row = randint(MIN_ROW, max_row)
+    column = randint(MIN_COL, max_column)
     symbol = choice('+*.:')
 
     return row, column, symbol
